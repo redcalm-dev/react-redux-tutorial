@@ -1,33 +1,26 @@
-import React from 'react';
+import React from 'react'
 import { Button, FormLabel } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import { increment, decrement } from '../actions'
 
 class Counter extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = { count: 0 }
-    }
-
-    handlePlusButton = () => {
-        this.setState({ count: this.state.count + 1 });
-    }
-
-    handleMinusButton = () => {
-        this.setState({ count: this.state.count - 1 });
-    }
-
     render() {
-        console.log("Counter");
+        const props = this.props
+        console.log("Counter")
+
         return (
             <React.Fragment>
                 <div>
-                    <FormLabel>count : {this.state.count}</FormLabel>
+                    <FormLabel>count : {props.value}</FormLabel>
                 </div>
-                <Button onClick={this.handlePlusButton}> + </Button>
-                <Button onClick={this.handleMinusButton}> - </Button>
+                <Button onClick={props.increment}> + </Button>
+                <Button onClick={props.decrement}> - </Button>
             </React.Fragment>
-        );
+        )
     }
 }
 
-export default Counter;
+const mapStateToProps = state => ({ value: state.counter.value })
+const mapDispatchToProps = ({ increment, decrement })
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter)
